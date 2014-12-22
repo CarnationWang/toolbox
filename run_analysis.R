@@ -17,7 +17,7 @@ names(B)[1] <- "Activity";names(B)[2] <- "Subject"
 C <- merge(A,B,all=TRUE)
 D <- merge(X_train,X_test,all=TRUE)
 names(D) <- features$V2
-E <- D[,grep("(.*(mean()).*)|(.*(std()).*)", j),]
+E <- D[,grep("(.*(mean()).*)|(.*(std()).*)", names(D)),]
 F <- data.frame(C,E)
 
 # take mean of observations per activity per subject.
@@ -29,4 +29,5 @@ for(i in activity_labels$V1)
 {	
 	H$Activity <- gsub(i,activity_labels$V2[i],H$Activity)
 }
-write.table(H,file="output.txt",row.name=FALSE)
+final_table <- data.frame(H[,1:2],H[,5:83])
+write.table(final_table,file="output.txt",row.name=FALSE)
